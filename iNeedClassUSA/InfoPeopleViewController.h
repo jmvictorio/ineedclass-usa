@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import "RequestToJSON.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface InfoPeopleViewController : UIViewController<RNFrostedSidebarDelegate, MFMailComposeViewControllerDelegate>{
     RequestToJSON *request;
@@ -32,6 +33,7 @@
 @property (nonatomic, strong) NSString *idperson;
 @property (nonatomic, strong) NSString *exchange1;
 @property (nonatomic, strong) NSString *id_exchange;
+@property (nonatomic, strong) NSString *picture;
 - (IBAction)dismiss:(id)sender;
 - (IBAction)menu:(id)sender;
 - (IBAction)call:(id)sender;

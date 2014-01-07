@@ -88,6 +88,21 @@
     self.levelLabel.text=[levels objectAtIndex:[level integerValue]-1];
     self.observationsText.text=observations;
     
+    FBProfilePictureView *pictureProfile=[[FBProfilePictureView alloc]initWithProfileID:self.picture pictureCropping:FBProfilePictureCroppingOriginal];
+    [pictureProfile setFrame:CGRectMake(125, 100, 70, 70)];
+    [self.view addSubview:pictureProfile];
+    UIImageView *circulo;
+    if([self.picture isEqualToString:@"0"]){
+        circulo=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"circuloFace200Person.png"]];
+        
+    }else{
+        circulo=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"circuloFace200.png"]];
+        
+    }
+    [circulo setFrame:CGRectMake(122, 97, 75, 75)];
+    [self.view addSubview:circulo];
+
+    
 }
 
 - (void)didReceiveMemoryWarning

@@ -21,4 +21,5 @@
 @property (nonatomic, strong) NSString *phone;
 @property (nonatomic, strong) NSString *genre;
 @property (nonatomic, strong) NSString *age;
+@property (nonatomic, strong) NSString *picture;
 @end

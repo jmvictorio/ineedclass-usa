@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
-@interface AccountViewController : UIViewController<RNFrostedSidebarDelegate>
+@interface AccountViewController : UIViewController<RNFrostedSidebarDelegate, FBLoginViewDelegate>
 @property (nonatomic, strong) NSString *id_user;
 - (IBAction)dismiss:(id)sender;
 - (IBAction)menu:(id)sender;

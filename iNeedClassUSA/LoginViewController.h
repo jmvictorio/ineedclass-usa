@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "RequestToJSON.h"
 
-@interface LoginViewController : UIViewController<UITextFieldDelegate,RNFrostedSidebarDelegate>{
+@interface LoginViewController : UIViewController<UITextFieldDelegate,RNFrostedSidebarDelegate, FBLoginViewDelegate>{
     RequestToJSON *request;
 }
 
+@property (strong, nonatomic) IBOutlet UIView *vistaFace;
 @property (strong, nonatomic) IBOutlet UITextField *pass;
 @property (strong, nonatomic) IBOutlet UITextField *email;
 - (IBAction)login:(id)sender;

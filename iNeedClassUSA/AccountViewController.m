@@ -13,6 +13,7 @@
 
 @interface AccountViewController (){
     NSString *user;
+    FBLoginView *loginView;
 }
 @property (nonatomic, strong) NSMutableIndexSet *optionIndices;
 
@@ -34,9 +35,70 @@
     [super viewDidLoad];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     user = [defaults objectForKey:@"id_user"];
+    NSString *useFace = [defaults objectForKey:@"facebook"];
     self.id_user=user;
     self.optionIndices = [NSMutableIndexSet indexSetWithIndex:1];
+    if([useFace isEqualToString:@"1"]){
+        loginView=[[FBLoginView alloc] initWithReadPermissions:@[@"basic_info", @"email"]];
+        if(self.view.frame.size.height == 568){
+            loginView.frame=CGRectMake(50, 525, 285, 51);
+        }else{
+            loginView.frame=CGRectMake(50, 437, 285, 51);
+        }
+        
+        loginView.delegate=self;
+        [self.view addSubview:loginView];
+    }
+    
 	// Do any additional setup after loading the view.
+}
+
+// Implement the loginViewShowingLoggedOutUser: delegate method to modify your app's UI for a logged-out user experience
+- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
+    [self exit:self];
+}
+
+// You need to override loginView:handleError in order to handle possible errors that can occur during login
+- (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error {
+    NSString *alertMessage, *alertTitle;
+    
+    // If the user should perform an action outside of you app to recover,
+    // the SDK will provide a message for the user, you just need to surface it.
+    // This conveniently handles cases like Facebook password change or unverified Facebook accounts.
+    if ([FBErrorUtility shouldNotifyUserForError:error]) {
+        alertTitle = @"Facebook error";
+        alertMessage = [FBErrorUtility userMessageForError:error];
+        
+        // This code will handle session closures since that happen outside of the app.
+        // You can take a look at our error handling guide to know more about it
+        // https://developers.facebook.com/docs/ios/errors
+    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
+        alertTitle = @"Session Error";
+        alertMessage = @"Your current session is no longer valid. Please log in again.";
+        
+        // If the user has cancelled a login, we will do nothing.
+        // You can also choose to show the user a message if cancelling login will result in
+        // the user not being able to complete a task they had initiated in your app
+        // (like accessing FB-stored information or posting to Facebook)
+    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
+        NSLog(@"user cancelled login");
+        
+        // For simplicity, this sample handles other errors with a generic message
+        // You can checkout our error handling guide for more detailed information
+        // https://developers.facebook.com/docs/ios/errors
+    } else {
+        alertTitle  = @"Something went wrong";
+        alertMessage = @"Please try again later.";
+        NSLog(@"Unexpected error:%@", error);
+    }
+    
+    if (alertMessage) {
+        [[[UIAlertView alloc] initWithTitle:alertTitle
+                                    message:alertMessage
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,7 +165,10 @@
 - (IBAction)exchanges:(id)sender {
     
 }
-
+- (void)salida{
+    LoginViewController *view=[self.storyboard instantiateViewControllerWithIdentifier:@"login"];
+    [self presentNatGeoViewController:view completion:nil];
+}
 - (IBAction)exit:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *username=@"guess_inc";
@@ -111,9 +176,7 @@
     [defaults setObject:username forKey:@"username"];
     [defaults setObject:id_user forKey:@"id_user"];
     [defaults synchronize];
-    LoginViewController *view=[self.storyboard instantiateViewControllerWithIdentifier:@"login"];
-    [self presentNatGeoViewController:view completion:nil];
-
+    [self salida];
 }
 
 - (IBAction)account:(id)sender {

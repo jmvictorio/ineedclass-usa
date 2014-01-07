@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface CellCollection : UICollectionViewCell
 
@@ -15,4 +16,5 @@
 @property (strong, nonatomic) IBOutlet UILabel *detailsExchange;
 @property (strong, nonatomic) IBOutlet UIProgressView *progressLevel;
 @property (strong, nonatomic) IBOutlet UILabel *ageLabel;
+@property (strong, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
 @end

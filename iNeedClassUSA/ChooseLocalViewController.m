@@ -95,7 +95,8 @@
                                           [activity stopAnimating];
                                           activity.hidden=YES;
                                           [picker reloadComponent:1];
-                                          
+                                          cityLabel.text=[[NSString alloc] initWithString:[cities objectAtIndex:0]];
+                                          followButton.hidden=NO;
                                           [picker setUserInteractionEnabled:YES];
                                       });
                    });
@@ -124,7 +125,8 @@
                                           [activity stopAnimating];
                                           activity.hidden=YES;
                                           [picker reloadAllComponents];
-                                          
+                                          stateLabel.text=[[NSString alloc] initWithString:[identificadorStates objectAtIndex:0]];
+                                          [self loadCities:[identificadorStates objectAtIndex:0]];
                                           //[vistacarga setHidden:YES];
                                       });
                    });

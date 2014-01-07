@@ -101,19 +101,20 @@
     //Parte principal, scroll
     UIView *main;
     if(self.view.frame.size.height == 568){
-        main=[[UIView alloc]initWithFrame:CGRectMake(0, 100, 320, 450)];
+        main=[[UIView alloc]initWithFrame:CGRectMake(0, 100, 320, 400)];
     }else{
-        main=[[UIView alloc]initWithFrame:CGRectMake(0, 80, 320, 400)];
+        main=[[UIView alloc]initWithFrame:CGRectMake(0, 80, 320, 350)];
     }
     [self.view addSubview:main];
     scroll = [[UIScrollView alloc] initWithFrame:
               CGRectMake(0,0,self.view.bounds.size.width,
                          self.view.bounds.size.height)];
+    //[scroll setBounces:NO];
     [main addSubview:scroll];
     
     UIView *iv = [[UIView alloc] initWithFrame:
                   CGRectMake(0,0,self.view.bounds.size.width,
-                             800)];
+                             350)];
     
     
     UILabel *header1=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 45)];
@@ -199,7 +200,7 @@
     [repass setReturnKeyType:UIReturnKeyDone];
     [repass addTarget:self action:@selector(cerrarTeclado:) forControlEvents:UIControlEventEditingDidEndOnExit];
     
-    UILabel *header4=[[UILabel alloc]initWithFrame:CGRectMake(0, 340, 270, 45)];
+    /*UILabel *header4=[[UILabel alloc]initWithFrame:CGRectMake(0, 340, 270, 45)];
     header4.text=@"     State                         City";
     [header4 setFont:[UIFont systemFontOfSize:16]];
     header4.backgroundColor=[UIColor colorWithRed:50.0/255.0 green:79.0/255.0 blue:133.0/255.0 alpha:1.0];
@@ -230,7 +231,7 @@
     identificadorCities=[[NSMutableArray alloc]init];
     paraPickerState=[[NSArray alloc]init];
     paraPickerCity=[[NSArray alloc]init];
-    [self initStatesAndCities];
+    [self initStatesAndCities];*/
     
     [iv setBackgroundColor:[UIColor whiteColor]];
     [iv addSubview:header1];
@@ -241,11 +242,11 @@
     [iv addSubview:header3];
     [iv addSubview:pass];
     [iv addSubview:repass];
-    [iv addSubview:header4];
-    [iv addSubview:stateLabel];
-    [iv addSubview:cityLabel];
-    [iv addSubview:stateAndCity];
-    [iv addSubview:activity];
+    //[iv addSubview:header4];
+    //[iv addSubview:stateLabel];
+    //[iv addSubview:cityLabel];
+    //[iv addSubview:stateAndCity];
+    //[iv addSubview:activity];
     
     [scroll addSubview:iv];
     [scroll setContentSize:CGSizeMake(iv.bounds.size.width, iv.bounds.size.height)];
@@ -265,28 +266,22 @@
     [footer setBackgroundColor:[UIColor whiteColor]];
     
     UIButton *menuButton=[UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [menuButton setFrame:CGRectMake(0, 0, 64, 44)];
-    [menuButton setTitle:@"+" forState:UIControlStateNormal];
+    [menuButton setFrame:CGRectMake(0, 0, 44, 44)];
+    //[menuButton setTitle:@"+" forState:UIControlStateNormal];
+    [menuButton setBackgroundImage:[UIImage imageNamed:@"button_menu.png"] forState:UIControlStateNormal];
     [[menuButton titleLabel] setFont:[UIFont systemFontOfSize:23]];
     [menuButton addTarget:self action:@selector(menu:) forControlEvents:UIControlEventTouchUpInside];
     [footer addSubview:menuButton];
     
     follow=[UIButton buttonWithType:UIButtonTypeRoundedRect];
     [follow setFrame:CGRectMake(100, 5, 100, 40)];
-    [follow setTitle:@"Alright!" forState:UIControlStateNormal];
-    [follow setHidden:YES];
+    [follow setTitle:@"Go Ahead?" forState:UIControlStateNormal];
+    [follow setHidden:NO];
     [[follow titleLabel] setFont:[UIFont systemFontOfSize:20]];
     [follow addTarget:self action:@selector(verify:) forControlEvents:UIControlEventTouchUpInside];
     [footer addSubview:follow];
     
-    UILabel *logo=[[UILabel alloc]initWithFrame:CGRectMake(271, 25, 49, 21)];
-    [logo setTextColor:[UIColor blackColor]];
-    [logo setText:@".idapp"];
-    [logo setTextAlignment:NSTextAlignmentCenter];
-    [logo setFont:[UIFont systemFontOfSize:17]];
-    [logo setAdjustsFontSizeToFitWidth:YES];
-    [logo setBackgroundColor:[UIColor clearColor]];
-    [footer addSubview:logo];
+    
 }
 
 
@@ -358,7 +353,8 @@
             NSArray *array2=[webServices leerConsultaMysql:16 texto1:email.text texto2:pass.text];
             NSString *id_login=[[array2 objectAtIndex:0] objectForKey:@"id_login"];
             NSLog(@"%@", id_login);
-            NSArray *array4=@[id_login, firstName.text, lastName.text, @"0",@"0",@"0",cityLabel.text, stateLabel.text];
+            NSArray *array4=@[id_login, firstName.text, lastName.text, @"0",@"0",@"0"];
+            //NSArray *array4=@[id_login, firstName.text, lastName.text, @"0",@"0",@"0",cityLabel.text, stateLabel.text];
             [webServices insert:203 array:array4];
             [self save];
             [self send];
@@ -380,16 +376,16 @@
     user=id_user1;
     NSString *name=[[res objectAtIndex:0] objectForKey:@"name"];
     NSString *lastname=[[res objectAtIndex:0] objectForKey:@"lastname"];
-    NSString *city=[[res objectAtIndex:0] objectForKey:@"city"];
-    NSString *state=[[res objectAtIndex:0] objectForKey:@"state_code"];
+    //NSString *city=[[res objectAtIndex:0] objectForKey:@"city"];
+    //NSString *state=[[res objectAtIndex:0] objectForKey:@"state_code"];
     // Store the data
     NSUserDefaults *login = [NSUserDefaults standardUserDefaults];
     [login setObject:username forKey:@"mail"];
     [login setObject:id_user1 forKey:@"id_user"];
     [login setObject:name forKey:@"name"];
     [login setObject:lastname forKey:@"lastname"];
-    [login setObject:state forKey:@"state_code"];
-    [login setObject:city forKey:@"city"];
+    //[login setObject:state forKey:@"state_code"];
+    //[login setObject:city forKey:@"city"];
     [login synchronize];
 
 }
@@ -450,7 +446,7 @@
 }
 
 //PICKER METODOS
-
+/*
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 2;
@@ -552,4 +548,5 @@
                    });
     
 }
+ */
 @end

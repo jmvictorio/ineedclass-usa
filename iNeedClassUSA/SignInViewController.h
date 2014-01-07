@@ -9,20 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "RequestToJSON.h"
 
-@interface SignInViewController : UIViewController<UIScrollViewDelegate, UITextFieldDelegate, RNFrostedSidebarDelegate, UIPickerViewDelegate>{
+@interface SignInViewController : UIViewController<UIScrollViewDelegate, UITextFieldDelegate, RNFrostedSidebarDelegate>{
     UIScrollView *scroll;
     UIView *vistaScroll;
     
-    NSMutableArray *cities;
-    NSMutableArray *identificadorCities;
+    //NSMutableArray *cities;
+    //NSMutableArray *identificadorCities;
     
-    NSMutableArray *states;
-    NSMutableArray *identificadorStates;
+    //NSMutableArray *states;
+    //NSMutableArray *identificadorStates;
     
-    NSArray *paraPickerState;
-    NSArray *paraPickerCity;
+    //NSArray *paraPickerState;
+    //NSArray *paraPickerCity;
     
-    UIActivityIndicatorView *activity;
+    //UIActivityIndicatorView *activity;
 }
 @property (nonatomic, strong) NSMutableIndexSet *optionIndices;
 

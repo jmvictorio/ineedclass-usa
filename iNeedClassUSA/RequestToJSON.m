@@ -34,18 +34,18 @@
     
     if(opcion==9){
         NSString *url2 = [NSString stringWithFormat:@"http://s505130685.onlinehome.us/web2/consultaUSA.php?opcion=9&texto=%@", string];
-        NSLog(@"%@",url2);
+        //NSLog(@"%@",url2);
         url = [NSURL URLWithString:url2];
     }
 
     if(opcion==10){
         NSString *url2 = [NSString stringWithFormat:@"http://s505130685.onlinehome.us/web2/consultaUSA.php?opcion=10&texto=%@", string];
-        NSLog(@"%@",url2);
+        //NSLog(@"%@",url2);
         url = [NSURL URLWithString:url2];
     }
     if(opcion==12){
         NSString *url2 = [NSString stringWithFormat:@"http://s505130685.onlinehome.us/web2/consultaUSA.php?opcion=12&texto=%@", string];
-        NSLog(@"%@",url2);
+        //NSLog(@"%@",url2);
         url = [NSURL URLWithString:url2];
     }
     if(opcion==13){
@@ -68,13 +68,23 @@
         //NSLog(@"%@",url2);
         url = [NSURL URLWithString:url2];
     }
+    if(opcion==19){
+        NSString *url2=[NSString stringWithFormat:@"http://s505130685.onlinehome.us/web2/consultaUSA.php?opcion=19&texto=%@", string];
+        //NSLog(@"%@",url2);
+        url = [NSURL URLWithString:url2];
+    }
+    if(opcion==20){
+        NSString *url2=[NSString stringWithFormat:@"http://s505130685.onlinehome.us/web2/consultaUSA.php?opcion=20&texto=%@", string];
+        //NSLog(@"%@",url2);
+        url = [NSURL URLWithString:url2];
+    }
     if(opcion==301){
         NSString *url2=[NSString stringWithFormat:@"http://s505130685.onlinehome.us/web2/consultaUSA.php?opcion=301&id_exchange=%@", string];
-        NSLog(@"%@",url2);
+        //NSLog(@"%@",url2);
         url = [NSURL URLWithString:url2];
     }
     NSString *jsonreturn= [[NSString alloc] initWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-    // NSLog(jsonreturn);
+   // NSLog(@"%@",jsonreturn);
     
     NSData *jsonData=[jsonreturn dataUsingEncoding:NSUTF32BigEndianStringEncoding];
     
@@ -120,6 +130,14 @@
             rows = [dict objectForKey:@"nameExchange"];
             //NSLog(@"%@", rows);
         }
+        if(opcion==19){
+            rows = [dict objectForKey:@"login"];
+            //NSLog(@"%@", rows);
+        }
+        if(opcion==20){
+            rows = [dict objectForKey:@"id_user"];
+            //NSLog(@"%@", rows);
+        }
         
     }
     return rows;
@@ -144,7 +162,7 @@
     }
     if(opcion==16){
         NSString *url2=[NSString stringWithFormat:@"http://s505130685.onlinehome.us/web2/consultaUSA.php?opcion=16&texto1=%@&texto2=%@", string1, string2];
-        NSLog(@"%@",url2);
+        //NSLog(@"%@",url2);
         url = [NSURL URLWithString:url2];
     }
 
@@ -225,7 +243,7 @@
     if (opcion==8) {
         NSString *url2=[NSString stringWithFormat:@"http://s505130685.onlinehome.us/web2/consultaUSA.php?opcion=8&texto1=%@&texto2=%@&texto3=%@", string1, string2, string3];
         url = [NSURL URLWithString:url2];
-        NSLog(@"%@",url2);
+       // NSLog(@"%@",url2);
     }
     NSString *jsonreturn= [[NSString alloc] initWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
     // NSLog(jsonreturn);
@@ -280,6 +298,32 @@
     }
     return rows;
 }
+- (void)update:(int)option array:(NSArray *)datas{
+    NSURL *url;
+    
+    
+    if(option==501){ //FACEBOOK
+        
+        NSString *picture=[datas objectAtIndex:0];
+        //NSString *email=[datas objectAtIndex:1];
+        NSString *name=[[datas objectAtIndex:2] stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        NSString *lastname=[[datas objectAtIndex:3] stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        NSString *age=[datas objectAtIndex:4];
+        NSString *genre=[datas objectAtIndex:5];
+        NSString *id_user=[datas objectAtIndex:6];
+        
+        NSString *url2=[NSString stringWithFormat:@"http://s505130685.onlinehome.us/web2/consultaUSA.php?opcion=501&name=%@&lastname=%@&age=%@&picture=%@&genre=%@&id_user=%@", name, lastname, age, picture, genre, id_user];
+        
+        url = [NSURL URLWithString:url2];
+        //[url query];
+        NSString *jsonreturn= [[NSString alloc] initWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+        jsonreturn=@"";
+        //NSLog(@"update: %@", url2);
+    }
+
+}
+
+
 //INSERTS!!!
 
 - (void)insert:(int)option array:(NSArray *)datas{
@@ -351,13 +395,39 @@
         //[url query];
         NSString *jsonreturn= [[NSString alloc] initWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
         jsonreturn=@"";
-        NSLog(@"insert: %@", url2);
+        //NSLog(@"insert: %@", url2);
     }
 
-    UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@"iNeedClass"
-                                                message:@"COMPLETE" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
     
-    [mes show];
+    
+    if(option==204){ //FACEBOOK
+        
+        NSString *picture=[datas objectAtIndex:0];
+        NSString *email=[datas objectAtIndex:1];
+        NSString *name=[[datas objectAtIndex:2] stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        NSString *lastname=[[datas objectAtIndex:3] stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        NSString *age=[datas objectAtIndex:4];
+        NSString *genre=[datas objectAtIndex:5];
+        NSString *id_login=[datas objectAtIndex:6];
+        
+        NSString *url2=[NSString stringWithFormat:@"http://s505130685.onlinehome.us/web2/consultaUSA.php?opcion=204&id_login=%@&name=%@&lastname=%@&age=%@&picture=%@&genre=%@&email=%@", id_login, name, lastname, age, picture, genre, email];
+        
+        url = [NSURL URLWithString:url2];
+        //[url query];
+        NSString *jsonreturn= [[NSString alloc] initWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+        jsonreturn=@"";
+       // NSLog(@"insert: %@", url2);
+    }
+    if(option==205){
+        NSString *email=[datas objectAtIndex:0];
+        NSString *url2=[NSString stringWithFormat:@"http://s505130685.onlinehome.us/web2/consultaUSA.php?opcion=205&email=%@", email];
+        
+        url = [NSURL URLWithString:url2];
+        //[url query];
+        NSString *jsonreturn= [[NSString alloc] initWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+        jsonreturn=@"";
+
+    }
     
     //NSLog(@"insert: %@", jsonreturn);
 

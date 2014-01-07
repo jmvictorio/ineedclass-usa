@@ -12,6 +12,7 @@
 #import "MainViewController.h"
 #import "LoginViewController.h"
 #import "AccountViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface CollectionViewController (){
     NSMutableArray *datasPeople;
@@ -55,6 +56,21 @@
         cell.cityStateLabel.text=[[NSString alloc] initWithFormat:@"%@, %@",person.city, person.state];
     
         cell.detailsExchange.text=[[NSString alloc] initWithFormat:@"%@ - %@", self.name_exchange, [nameExchange2 objectAtIndex:indexPath.row]];
+    
+        cell.profilePictureView=[[FBProfilePictureView alloc]initWithProfileID:person.picture pictureCropping:FBProfilePictureCroppingOriginal];
+    
+        [cell.profilePictureView setFrame:CGRectMake(9, 15, 55, 55)];
+        [cell addSubview:cell.profilePictureView];
+    UIImageView *circulo;
+    if([person.picture isEqualToString:@"0"]){
+        circulo=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"circuloFace200GrisPerson.png"]];
+        
+    }else{
+        circulo=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"circuloFace200Gris.png"]];
+        
+    }
+        [circulo setFrame:CGRectMake(6, 12, 60, 60)];
+        [cell addSubview:circulo];
         // cell customization
     return cell;
     //NSString *datoString = [ArrayRN objectAtIndex:indexPath.row];
@@ -74,6 +90,7 @@
     view.city=city;
     view.exchange1=self.name_exchange;
     view.id_exchange=person.id_exchange;
+    view.picture=person.picture;
     [self presentNatGeoViewController:view completion:nil];
     
 }
@@ -114,6 +131,7 @@
         NSString *state_code=[[paraPickerPeople objectAtIndex:cont] objectForKey:@"state_code"];
         NSString *exchangetemp=[[paraPickerPeople objectAtIndex:cont] objectForKey:@"id_exchange"];
         NSString *exchange2temp=[[paraPickerPeople objectAtIndex:cont] objectForKey:@"id_exchange2"];
+        NSString *picture=[[paraPickerPeople objectAtIndex:cont] objectForKey:@"picture"];
         NSArray *paraPickerExchanges2=[request leerConsultaMysql:18 texto:exchange2temp];
         //NSLog(@"exachange2 ID: %@", exchange2temp);
         //NSLog(@"exachange2 ARRAY: %@", paraPickerExchanges2);
@@ -129,6 +147,7 @@
         person.city=city_person;
         person.state=state_code;
         person.id_exchange=exchangetemp;
+        person.picture=picture;
         [people addObject:person];
         
         

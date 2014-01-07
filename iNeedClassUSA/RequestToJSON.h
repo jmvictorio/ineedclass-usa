@@ -18,4 +18,5 @@
 - (NSArray *)leerConsultaMysql:(int)opcion texto1:(NSString *)string1 texto2:(NSString *)string2 texto3:(NSString *)string3;
 - (NSArray *)leerConsultaMysql:(int)opcion texto1:(NSString *)string1 texto2:(NSString *)string2 texto3:(NSString *)string3 texto4:(NSString *)string4;
 - (void)insert:(int)option array:(NSArray *)datas;
+- (void)update:(int)option array:(NSArray *)datas;
 @end
